@@ -1,0 +1,31 @@
+{
+  "name": "skillspring-backend-m00881178",
+  "version": "1.0.0",
+  "description": "Backend server for SkillSpring, a lesson booking application developed using Node.js and Express for CST3144 Full Stack Development coursework.",
+  "keywords": [
+    "skillspring",
+    "nodejs",
+    "express",
+    "backend",
+    "coursework"
+  ],
+  "homepage": "https://github.com/alsaiyed24/SkillSpring-Backend-M00881178#readme",
+  "bugs": {
+    "url": "https://github.com/alsaiyed24/SkillSpring-Backend-M00881178/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alsaiyed24/SkillSpring-Backend-M00881178.git"
+  },
+  "license": "ISC",
+  "author": "Alhussain Saiyed",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.3.0"
+  }
+}
