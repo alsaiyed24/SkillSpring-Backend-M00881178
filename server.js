@@ -3,6 +3,8 @@
 const express = require("express");
 const cors = require("cors");
 
+const path = require("path");
+
 // Create the Express application
 const app = express();
 
@@ -20,6 +22,24 @@ app.use(function(request, response, next) {
     next();
 });
 
+
+/*
+    WEEK 5 - TASK 5.4
+    Serve lesson images from the backend.
+*/
+
+// Locate the folder containing lesson images
+const publicPath = path.resolve(__dirname, "staticFiles");
+
+// Serve image files through the /images URL
+app.use("/images", express.static(publicPath));
+
+// Return 404 if a requested image does not exist
+app.use("/images", function(request, response) {
+    response.status(404).send("Image not found!");
+});
+
+
 // SkillSpring lesson data
 const lessons = [
     {
@@ -28,7 +48,8 @@ const lessons = [
         location: "Hendon",
         price: 25,
         availability: 5,
-        icon: "💻"
+        icon: "💻",
+        image: "images/coding.jpg"
     },
     {
         id: 1002,
@@ -36,7 +57,8 @@ const lessons = [
         location: "Colindale",
         price: 20,
         availability: 5,
-        icon: "📐"
+        icon: "📐",
+        image: "images/mathematics.jpg"
     },
     {
         id: 1003,
@@ -44,7 +66,8 @@ const lessons = [
         location: "Wembley",
         price: 18,
         availability: 5,
-        icon: "🎨"
+        icon: "🎨",
+        image: "images/art.jpg"
     }
 ];
 
