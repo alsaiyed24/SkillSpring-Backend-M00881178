@@ -2,14 +2,24 @@
 
 const express = require("express");
 const cors = require("cors");
-
 const path = require("path");
+
+
+
+
 
 // Create the Express application
 const app = express();
 
 // Allow the frontend to access the backend
 app.use(cors());
+
+/*
+    WEEK 5 - TASK 5.5
+    Allow Express to read incoming JSON request bodies.
+*/
+app.use(express.json());
+
  
 /*
     WEEK 5 - TASK 5.3
@@ -81,6 +91,29 @@ const lessons = [
 app.get("/lessons", function(request, response) {
     response.json(lessons);
 });
+
+
+/*
+    WEEK 5 - TASK 5.5
+    Receive new orders from the SkillSpring frontend.
+*/
+app.post("/orders", function(request, response) {
+
+    // Get the order information sent by the frontend
+    const order = request.body;
+
+    // Display the order details in the backend terminal
+    console.log("New SkillSpring order received:");
+    console.log("Customer name:", order.name);
+    console.log("Phone number:", order.phone);
+    console.log("Selected lesson IDs:", order.cart);
+
+    // Confirm that the server received the order
+    response.status(201).json({
+        message: "Order received successfully!"
+    });
+});
+
 
 /*
     WEEK 5 - TASK 5.2
