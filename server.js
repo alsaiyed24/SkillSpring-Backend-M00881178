@@ -8,6 +8,17 @@ const app = express();
 
 // Allow the frontend to access the backend
 app.use(cors());
+ 
+/*
+    WEEK 5 - TASK 5.3
+    Logger middleware records incoming HTTP requests.
+*/
+app.use(function(request, response, next) {
+    console.log("Incoming " + request.method +
+                " request to: " + request.url);
+
+    next();
+});
 
 // SkillSpring lesson data
 const lessons = [
@@ -38,10 +49,24 @@ const lessons = [
 ];
 
 // Respond to requests with lesson data in JSON format
-app.use(function(request, response) {
-    console.log("In comes a request to: " + request.url);
+
+/*
+    WEEK 5 - TASK 5.2
+    GET route for SkillSpring lessons.
+    Returns lesson data only when /lessons is requested.
+*/
+app.get("/lessons", function(request, response) {
     response.json(lessons);
 });
+
+/*
+    WEEK 5 - TASK 5.2
+    Handle requests that do not match any route.
+*/
+app.use(function(request, response) {
+    response.status(404).send("Page not found!");
+});
+
 
 // Start the server on port 3000
 app.listen(3000, function() {
