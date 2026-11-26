@@ -25,31 +25,35 @@ const mongoURI = process.env.MONGODB_URI;
 // Create a MongoDB client
 const client = new MongoClient(mongoURI);
 
-// Connect to the SkillSpring database
+
+/*
+    WEEK 7 - DATABASE CONNECTION
+    Connect to MongoDB before starting Express.
+*/
 async function connectDatabase() {
     try {
+        // Connect to MongoDB Atlas
         await client.connect();
 
-        // Check that the database is responding
+        // Verify that the database responds
         await client.db("skillspring").command({ ping: 1 });
-
-
-// Reference the lessons collection in MongoDB
-const lessonsCollection = client.db("skillspring").collection("lessons");
-
 
         console.log("Connected to MongoDB Atlas successfully!");
 
+        // Start Express only after MongoDB is ready
+        const PORT = process.env.PORT || 3000;
+
+        app.listen(PORT, function() {
+            console.log("App started on port " + PORT);
+        });
+
     } catch (error) {
         console.error("MongoDB connection failed:", error.message);
+
+        // Stop the application if MongoDB cannot connect
+        process.exit(1);
     }
 }
-
-// Start the database connection
-connectDatabase();
-
-
-
 
 
 
@@ -95,36 +99,6 @@ app.use("/images", function(request, response) {
 });
 
 
-// SkillSpring lesson data
-const lessons = [
-    {
-        id: 1001,
-        subject: "Coding",
-        location: "Hendon",
-        price: 25,
-        availability: 5,
-        icon: "💻",
-        image: "images/coding.jpg"
-    },
-    {
-        id: 1002,
-        subject: "Mathematics",
-        location: "Colindale",
-        price: 20,
-        availability: 5,
-        icon: "📐",
-        image: "images/mathematics.jpg"
-    },
-    {
-        id: 1003,
-        subject: "Art",
-        location: "Wembley",
-        price: 18,
-        availability: 5,
-        icon: "🎨",
-        image: "images/art.jpg"
-    }
-];
 
 // Respond to requests with lesson data in JSON format
 
@@ -344,7 +318,5 @@ app.use(function(request, response) {
 });
 
 
-// Start the server on port 3000
-app.listen(3000, function() {
-    console.log("App started on port 3000");
-});
+// Connect to MongoDB and then start Express
+connectDatabase();
